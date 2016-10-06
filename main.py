@@ -183,7 +183,6 @@ def checkleaf(node,vis):
 				flag=0
 	return flag
 
-
 def dfs(s,e):
 
 	start = time.time()
@@ -435,24 +434,203 @@ def greedy(s,e):
 	else:
 		print("\nTime taken ",timeTaken," s")
 
-# startNode=random.randint(0,99)
-# print("Start at ",startNode)
-# endNode=random.randint(0,99)
-# print("End at ",endNode)
+def neiCost(node,e,preDis):
 
+	addStrck=[]
+	dis=[]
+
+	u=up(node)
+	if (u>=0 and u<=99):
+		ud=sdis(u, node)
+		dis.append(ud)
+		addStrck.append(u)
+
+	r=ri(node)
+	if (r>=0 and r<=99 and int(r/10)==int(node/10)):
+		rd=sdis(r, node)
+		dis.append(rd)
+		addStrck.append(r)
+
+	d=do(node)
+	if (d>=0 and d<=99):
+		dd=sdis(d, node)
+		dis.append(dd)
+		addStrck.append(d)
+
+	l=le(node)
+	if (l>=0 and l<=99 and int(l/10)==int(node/10)):
+		ld=sdis(l, node)
+		dis.append(ld)
+		addStrck.append(l)
+
+	#print("current node ",node," end node ",e)
+
+	# print("init list ",addStrck)
+	# print("dis ",dis)
+
+
+	map=[]
+
+	for i in addStrck:
+		map.append([])
+
+
+	# #addint total distace to map
+	cou=0
+	for i in addStrck:
+		# print("chiled to parent ",node,i,sdis(node,i))
+		# print("chiled to end ",i,e,sdis(i,e))
+		# print("total dist ",sdis(node,i)+sdis(i,e))
+		# print()
+
+		#map[cou].append(sdis(node,i)+sdis(i,e))#total distance
+		map[cou].append(sdis(i,e))#distance from i th node to end node
+		map[cou].append(sdis(node,i)+preDis)#distance between 2 nodes as cost
+		map[cou].append(i)#node
+		cou+=1
+
+	#print("map ",map)
+
+
+	cou=0
+	for i in map:
+		map[cou].insert(0,map[cou][0]+map[cou][1])
+		cou+=1
+
+
+	map.sort()
+
+	#print("map ",map)
+
+	return map
+
+def a(s,e):
+
+
+	start = time.time()
+
+	stack=[]
+	visited=[]
+	travel=[]
+
+	sn=s
+	en=e
+
+	cn=sn
+
+	visited.append(sn)
+
+	print(table("A*",stones,sn,en,"",stack,travel,""))
+
+
+	t=[]
+	td=[]
+	for i in neiCost(cn,en,0):
+		if(i[3] not in stones):
+			td.append(i[3])
+			t.append(i)
+
+	#print("t ",t)
+
+	stack=t+stack
+	visited=td+visited
+
+	# print("current node ",cn)
+	# print("stack ",stack)
+	# print("visited ",visited)
+	# print()
+
+	print(table("A*",stones,cn,en,cn,visited,"",""))
+
+	flag=0
+
+	while 1:
+		#print("stack before ",stack)
+		if(len(stack)==0):
+			print("\n\n------------------------------No path------------------------------\n\n")
+			flag=1
+			break
+		else:
+			cn=stack.pop(0)
+
+			#print("cn ",cn)
+			curentNodeNode=cn[3]
+			currentDistance=cn[2]
+			#print("cnn ",curentNodeNode," cd ",currentDistance)
+			k=neiCost(curentNodeNode, e,currentDistance)
+
+			t=[]
+			for i in k:
+				if i[3] not in visited:
+					if i[3] not in stones:
+						t.append(i)
+						visited.append(i[3])
+				
+				#print("i ",i[3])
+
+			stack=t+stack
+			travel.append(curentNodeNode)
+
+
+			#getting stack actual node to drow table
+			cou=0
+			ss=[]
+			for i in stack:	
+				ss.append(stack[cou][3])
+				#print("strac str ",ss)
+				cou+=1
+
+
+			#print("ss ",ss)
+
+			print(table("A*",stones,sn,en,curentNodeNode,ss,travel,""))
+
+			if(curentNodeNode==en):
+				break
+
+
+
+	if(flag!=1):
+		print(table("A*",stones,sn,en,"","","",travel))
+
+	end = time.time()
+	timeTaken=end - start
+
+	if(timeTaken<1):
+		print("\nTime taken ",timeTaken*1000," ms")
+	else:
+		print("\nTime taken ",timeTaken," s")
+
+
+
+#adding random stones ,start, end
+startNode=random.randint(0,99)
+print("\n\nStart at ",startNode)
+endNode=random.randint(0,99)
+print("End at ",endNode)
+
+
+noOfstones=random.randint(0,99)
+print("No of stones ",noOfstones)
+stones=[]
+
+for i in range(0,noOfstones):
+	sl=random.randint(0,99)
+	if (sl!=startNode and sl!=endNode):
+		stones.append(sl)
+
+print("Stones locations ",stones)
 
 #ading stones
-stones=[24,34,44,54,64,74,4,14]
 
 
-#dfs(0,55)
-#bfs(0,55)
-#greedy(0,55)
+s=startNode
+e=endNode
 
-
-
-
-
+#dfs(s,e)
+#bfs(s,e)
+#greedy(s,e)
+a(s,e)
 
 
 
