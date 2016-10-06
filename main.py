@@ -81,9 +81,6 @@ def nei(node):
 
 	addStrck=[]
 
-	sl=0
-	el=99
-
 	u=up(node)
 	if (u>=0 and u<=99 ):
 		addStrck.append(u)
@@ -109,10 +106,6 @@ def neiShort(node,e):
 	disSort=[]
 	outList=[]
 
-
-	sl=0
-	el=99
-
 	u=up(node)
 	if (u>=0 and u<=99 ):
 		ud=sdis(u, e)
@@ -137,13 +130,9 @@ def neiShort(node,e):
 		dis.append(ld)
 		addStrck.append(l)
 
-
-
-	# print(addStrck)
-	# print("dis ",dis)
 	disSort=dis
 	disSort=sorted(dis)
-	# print("dissort ",disSort)
+
 
 	map=[]
 
@@ -160,17 +149,10 @@ def neiShort(node,e):
 		map[cou].append(i)
 		cou+=1
 
-
-
-
 	map.sort()
-	# print("map ",map)	
-
 
 	for i in map:
 		outList.append(i[1])
-
-	# print(outList)
 
 	return outList
 
@@ -209,18 +191,11 @@ def dfs(s,e):
 	visited=t+visited
 
 	print(table("DFS",stones,sn,en,cn,stack,travel,""))
-
-	# print("current node ",cn)
-	# print("stack ",stack)
-	# print("visited ",visited)
-	# print()
-
-	# print(table("dfs",stones,sn,en,cn,stack,"",""))
-
+	print(cn,stack,"\n")
+	
 	flag=0
 
 	while cn!=en:
-		#print("stack before ",stack)
 		
 		if(len(stack)==0):
 			print("\n\n------------------------------No path------------------------------\n\n")
@@ -240,22 +215,13 @@ def dfs(s,e):
 			stack=t+stack
 
 			print(table("DFS",stones,sn,en,cn,stack,travel,""))
-
-			#time.sleep(0.25)
-
-			# print("current node ",cn)
-			# print("stack after ",stack)
-			# print("visited ",visited)
-			# print()
+			print(cn,stack,"\n")
 			i=cn
-		
-			# print(stack)
 			
 			
 	if(flag!=1):
 		print(table("DFS",stones,sn,en,"","","",travel))
 
-	
 
 	end = time.time()
 	timeTaken=end - start
@@ -273,7 +239,6 @@ def bfs(s,e):
 	visited=[]
 	travel=[]
 
-
 	sn=s
 	en=e
 
@@ -282,9 +247,6 @@ def bfs(s,e):
 	print(table("BFS",stones,sn,en,"",stack,travel,""))
 
 	visited.append(sn)
-
-	
-
 
 	t=[]
 	for i in nei(cn):
@@ -295,19 +257,13 @@ def bfs(s,e):
 	visited=t+visited
 
 	print(table("BFS",stones,sn,en,cn,stack,travel,""))
+	print(cn,stack,"\n")
 
 
-	# print("current node ",cn)
-	# print("stack ",stack)
-	# print("visited ",visited)
-	# print()
-
-	#print(table("bfs","",cn,en,cn,stack,"",""))
 
 	flag=0
 
 	while cn!=en:
-		# print("stack before ",stack)
 		if(len(stack)==0):
 			print("\n\n------------------------------No path------------------------------\n\n")
 			flag=1
@@ -324,18 +280,11 @@ def bfs(s,e):
 			travel.append(cn)
 			print(table("BFS",stones,sn,en,cn,stack,travel,""))
 
-			#time.sleep(0.1)
-			#os.system('cls' if os.name == 'nt' else 'clear')
-
-
-
-			# print("current node ",cn)
-			# print("stack after ",stack)
-			# print("visited ",visited)
-			# print()
 			i=cn
 			
-			#print(stack)
+			print(cn,stack,"\n")
+
+
 	if(flag!=1):
 		print(table("BFS",stones,sn,en,"","","",travel))
 		
@@ -384,18 +333,13 @@ def greedy(s,e):
 	stack=t+stack
 	visited=t+visited
 
-	# print("current node ",cn)
-	# print("stack ",stack)
-	# print("visited ",visited)
-	# print()
-
-	#print(table("Greedy","",sn,en,cn,stack,"",""))
 	print(table("Greedy",stones,sn,en,"",stack,travel,""))
+	print(cn,stack,"\n")
 
 	flag=0
 
 	while cn!=en:
-		#print("stack before ",stack)
+
 		if(len(stack)==0):
 			print("\n\n------------------------------No path------------------------------\n\n")
 			flag=1
@@ -411,18 +355,11 @@ def greedy(s,e):
 			stack=t+stack
 			travel.append(cn)
 			print(table("Greedy",stones,sn,en,cn,stack,travel,""))
-			#time.sleep(0.1)
-			#os.system('cls' if os.name == 'nt' else 'clear')
+			print(cn,stack,"\n")
 
-
-
-			# print("current node ",cn)
-			# print("stack after ",stack)
-			# print("visited ",visited)
-			# print()
 			i=cn
+		
 			
-			#print(stack)
 	if(flag!=1):
 		print(table("Greedy",stones,sn,en,"","","",travel))
 
@@ -463,12 +400,6 @@ def neiCost(node,e,preDis):
 		dis.append(ld)
 		addStrck.append(l)
 
-	#print("current node ",node," end node ",e)
-
-	# print("init list ",addStrck)
-	# print("dis ",dis)
-
-
 	map=[]
 
 	for i in addStrck:
@@ -478,19 +409,10 @@ def neiCost(node,e,preDis):
 	# #addint total distace to map
 	cou=0
 	for i in addStrck:
-		# print("chiled to parent ",node,i,sdis(node,i))
-		# print("chiled to end ",i,e,sdis(i,e))
-		# print("total dist ",sdis(node,i)+sdis(i,e))
-		# print()
-
-		#map[cou].append(sdis(node,i)+sdis(i,e))#total distance
 		map[cou].append(sdis(i,e))#distance from i th node to end node
 		map[cou].append(sdis(node,i)+preDis)#distance between 2 nodes as cost
 		map[cou].append(i)#node
 		cou+=1
-
-	#print("map ",map)
-
 
 	cou=0
 	for i in map:
@@ -499,8 +421,6 @@ def neiCost(node,e,preDis):
 
 
 	map.sort()
-
-	#print("map ",map)
 
 	return map
 
@@ -530,22 +450,19 @@ def a(s,e):
 			td.append(i[3])
 			t.append(i)
 
-	#print("t ",t)
 
 	stack=t+stack
 	visited=td+visited
 
-	# print("current node ",cn)
-	# print("stack ",stack)
-	# print("visited ",visited)
-	# print()
 
 	print(table("A*",stones,cn,en,cn,visited,"",""))
+	print(cn,"\n",stack,"\n")
+
 
 	flag=0
 
 	while 1:
-		#print("stack before ",stack)
+
 		if(len(stack)==0):
 			print("\n\n------------------------------No path------------------------------\n\n")
 			flag=1
@@ -553,10 +470,9 @@ def a(s,e):
 		else:
 			cn=stack.pop(0)
 
-			#print("cn ",cn)
 			curentNodeNode=cn[3]
 			currentDistance=cn[2]
-			#print("cnn ",curentNodeNode," cd ",currentDistance)
+
 			k=neiCost(curentNodeNode, e,currentDistance)
 
 			t=[]
@@ -566,7 +482,7 @@ def a(s,e):
 						t.append(i)
 						visited.append(i[3])
 				
-				#print("i ",i[3])
+
 
 			stack=t+stack
 			travel.append(curentNodeNode)
@@ -577,13 +493,11 @@ def a(s,e):
 			ss=[]
 			for i in stack:	
 				ss.append(stack[cou][3])
-				#print("strac str ",ss)
 				cou+=1
 
-
-			#print("ss ",ss)
-
 			print(table("A*",stones,sn,en,curentNodeNode,ss,travel,""))
+			print(cn,"\n",stack,"\n")
+
 
 			if(curentNodeNode==en):
 				break
@@ -621,7 +535,7 @@ for i in range(0,noOfstones):
 
 print("Stones locations ",stones)
 
-#ading stones
+
 
 
 s=startNode
